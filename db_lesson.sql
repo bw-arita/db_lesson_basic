@@ -1,6 +1,8 @@
 ▷Q1
-USE db_lesson;
-CREATE TABLE departments (department_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(20) NOT NULL, created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);
+CREATE TABLE departments (department_id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+name VARCHAR(20) NOT NULL, 
+created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP);
 DESC departments;
 
 ▷Q2
@@ -8,7 +10,12 @@ ALTER TABLE people ADD COLUMN department_id INT UNSIGNED AFTER email;
 DESC people;
 
 ▷Q3
-INSERT INTO departments (name) VALUES ('営業'), ('開発'), ('経理'), ('人事'), (‘情報システム’);
+INSERT INTO departments (name) VALUES 
+('営業'), 
+('開発'), 
+('経理'), 
+('人事'), 
+(‘情報システム’);
 INSERT INTO people (name, department_id) VALUES
   ('佐藤 太郎', 1),
   ('鈴木 次郎', 1),
@@ -37,17 +44,6 @@ SELECT * FROM people;
 UPDATE people SET department_id = 1 WHERE department_id IS NULL;
 
 ▷Q5
-UPDATE people SET age = 30, gender = 1 WHERE person_id = 1;
-UPDATE people SET age = 27, gender = 2 WHERE person_id = 2;
-UPDATE people SET age = 35, gender = 1 WHERE person_id = 3;
-UPDATE people SET age = 28, gender = 1 WHERE person_id = 4;
-UPDATE people SET age = 40, gender = 1 WHERE person_id = 5;
-UPDATE people SET age = 26, gender = 2 WHERE person_id = 6;
-UPDATE people SET age = 32, gender = 1 WHERE person_id = 7;
-UPDATE people SET age = 45, gender = 2 WHERE person_id = 8;
-UPDATE people SET age = 29, gender = 2 WHERE person_id = 9;
-UPDATE people SET age = 37, gender = 1 WHERE person_id = 10;
-
 select name, age from people where gender = 1 order by age desc;
 
 ▷Q6
@@ -61,13 +57,12 @@ select name from people where (gender = 2 and age between 20 and 29) or (gender 
 select name from people where department_id = 1 order by age asc;
 
 ▷Q9
-select name from people where (gender=2 and age between 20 and 29) or (gender=1 and age between 40 and 49);
+select avg(age) as average_age from people where (department_id=2 and gender=2);
 
 ▷Q10
 select p.name, d.name, r.content from reports as r join people as p on r.person_id=p.person_id join departments as d on d.department_id = p.department_id;
 
 ▷Q11
-delete from reports where person_id = 10;
 select p.name from people AS p LEFT JOIN reports AS r ON p.person_id = r.person_id
 where r.person_id is null;
 
